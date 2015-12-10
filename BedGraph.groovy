@@ -41,7 +41,7 @@ class BedGraph extends ArrayList{
 	
 	def toLinearArray(chr){
 		def maxChr = chrMax(chr)
-		def chrArray = new int[maxChr+1]
+		def chrArray = new int[maxChr+10]
 		
 		for(int i = 0;i < this.size();i++){
 			def bed = (this)[i]
