@@ -16,6 +16,7 @@ class BedLine{
 		start = fields[1] as int
 		end = fields[2] as int
 		state = fields[3]
+		// KJD This only applies to one situation... kidn of bad hard code...
 		def bits = state.split("_")
 		intstate = bits[0] as int
 	}	 
