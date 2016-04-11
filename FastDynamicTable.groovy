@@ -38,6 +38,18 @@ class FastDynamicTable {
 		delegate.invokeMethod(name,args)
 	}	
 	
+	// Treats table as a vector of counts 
+	def increment(rowKey,colKey){
+		def val = this[rowKey][colKey]
+		if (val == null) {
+			this[rowKey][colKey] = 1
+			return(1)
+		}else {
+			this[rowKey][colKey] = val+1
+			return(val+1)
+		}
+ 	}
+	
 	// Allow [] notation
 	def putAt(String rowKey,value){
 		this[rowKey] = value
@@ -82,6 +94,25 @@ class FastDynamicTable {
 			println rowvals.join("\t")
 		}
 	}												
+	
+	/***
+	* Print sorted
+	*/ 
+	def printSorted(){
+		def colKeys = delegate.columnKeySet()
+		def rowKeys = delegate.rowKeySet()
+		
+		colKeys = colKeys.sort()
+		rowKeys = rowKeys.sort()		
+	 	print "Features\t"
+		println colKeys.join("\t")				
+		rowKeys.each{r->		
+			print "${r}\t"
+			def rowvals = colKeys.collect{c->delegate.get(r,c) ?: defaultVal}
+			println rowvals.join("\t")
+		}	
+	}
+	
 	
 	// 40 seconds... 259 x 295
 	// 6 second without rowvals= and w.writeLine lines!
