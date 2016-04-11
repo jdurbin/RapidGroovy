@@ -116,7 +116,7 @@ class FastDynamicTable {
 	
 	// 40 seconds... 259 x 295
 	// 6 second without rowvals= and w.writeLine lines!
-	def write(fileName,delimiter){
+	def write0(fileName,delimiter){
 		
 		new File(fileName).withWriter{w->
 		
@@ -135,13 +135,54 @@ class FastDynamicTable {
 	
 	// grab rowmap and write out rowmap.values  9803x295 in 6.9 sec. 
 	// 
-	def write2(fileName,delimiter){
+	def write(fileName,delimiter){
 		
 		new File(fileName).withWriter{w->
 		
 			def colKeys = delegate.columnKeySet()
 			def numCols = colKeys.size()
 			def rowKeys = delegate.rowKeySet()
+			w.write "Features$delimiter"
+			w.writeLine colKeys.join(delimiter)		
+
+			rowKeys.each{r->		
+				w.write "${r}$delimiter"
+				def rowmap = delegate.row(r)
+				
+				// 206 x 295  33.5s
+				//def rowvals = colKeys.collect{c->
+				//	rowmap[c] ?: defaultVal					
+				//}				
+				
+				// If sizes match just write it out, otherwise find the missing values
+				// and replace them with default values. 
+				// In case where there are no missing values, this takes 7s.  9803x295
+				// Time will go up dramatically with missing values. 
+				if (rowmap.size() == numCols){
+					w.writeLine rowmap.values().join(delimiter)
+				}else{
+					def rowvals = colKeys.collect{c->
+						rowmap[c] ?: defaultVal					
+					}
+					w.writeLine rowvals.join(delimiter)					
+				}							
+			}
+		}
+	}
+	
+	// grab rowmap and write out rowmap.values  9803x295 in 6.9 sec. 
+	// 
+	def writeSorted(fileName,delimiter){
+		
+		new File(fileName).withWriter{w->
+		
+			def colKeys = delegate.columnKeySet()
+			def numCols = colKeys.size()
+			def rowKeys = delegate.rowKeySet()
+			
+			colKeys = colKeys.sort()
+			rowKeys = rowKeys.sort()
+			
 			w.write "Features$delimiter"
 			w.writeLine colKeys.join(delimiter)		
 
