@@ -2,3 +2,18 @@ Collection of Groovy classes used in rapid prototyping and/or one-off applicatio
 
 Unlike durbinlib, these classes are not compiled, and they generally are considered of 
 lower overall quality and/or of too narrow use to be part of durbinlib. 
+
+
+==================
+
+IDEAS:
+
+OnlinTable is nice, but often I am wanting to build a map between two different columns. 
+Maybe make a class to do just that.  Something like: 
+
+name2idMap = new MapExtractor(fileName,nameColumn,idColumn)
+
+You could even generate a 2D map by giving a third column
+
+idByCompound2Concentration = new MapExtractor(fileName,idColumn,compoundColumn,concentrationColumn)
+

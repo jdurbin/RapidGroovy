@@ -73,6 +73,12 @@ class FastDynamicTable {
 		}
 	}
 	
+	def eachColKeyWithValues(Closure c){
+		delegate.columnMap().each{colKey,rowMap->
+			c(colKey,rowMap.values())
+		}
+	}
+	
 	def eachRowKeyWithColumnMap(Closure c){
 			delegate.rowMap().each{rowKey,columnMap->
 				c(rowKey,columnMap)
