@@ -1,7 +1,6 @@
 Collection of Groovy classes used in rapid prototyping and/or one-off applications.
 
-Unlike durbinlib, these classes are not compiled, and they generally are considered of 
-lower overall quality and/or of too narrow use to be part of durbinlib. 
+Unlike durbinlib, these classes are not compiled, and they generally are considered of lower overall quality and/or of too narrow use to be part of durbinlib. 
 
 
 ==================
